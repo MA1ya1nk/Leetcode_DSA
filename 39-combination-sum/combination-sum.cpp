@@ -1,32 +1,28 @@
 class Solution {
 public:
-    void CombinationRec(int index, vector<int> list, vector<vector<int>> &ans,
-                        vector<int>& candidates, int target, int n) {
-        // Found valid combination
-        if(target == 0){
-            ans.push_back(list);
-            return;
-        }
-        // Stop if target < 0 or no more candidates
-        if(index == n || target < 0){
-            return;
-        }
+    void solve(vector<vector<int>>& ans,vector<int>& temp,vector<int>& candidates, int target,int i,int& sum){
+     if(i>=candidates.size()) return ;
+     if(sum==target){
+        ans.push_back(temp);
+        return ;
+     }
 
-        // Include current element
-        list.push_back(candidates[index]);
-        CombinationRec(index, list, ans, candidates, target - candidates[index], n);
-
-        // Backtrack
-        list.pop_back();
-
-        // Exclude current element and move to next
-        CombinationRec(index + 1, list, ans, candidates, target, n);
-    }
-
+     // leave 
+     if(sum+candidates[i]<=target){
+        temp.push_back(candidates[i]);
+        sum=sum+candidates[i];
+        solve(ans,temp,candidates,target,i,sum);
+        temp.pop_back();
+        sum=sum-candidates[i];
+     }
+     //take
+     solve(ans,temp,candidates,target,i+1,sum);
+}
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> ans;
-        vector<int> list;
-        CombinationRec(0, list, ans, candidates, target, candidates.size());
+        vector<int>temp;
+        int sum=0;
+        solve(ans,temp,candidates,target,0,sum);
         return ans;
     }
 };
