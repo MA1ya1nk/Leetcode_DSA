@@ -1,11 +1,10 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        map<int,int> occ;
-        int k=nums.size()/2;
-        for(auto i:nums){
-            occ[i]++;
-            if(occ[i]>k) return i;
+        sort(nums.begin(),nums.end());
+        int n=nums.size(),k=n/2;
+        for(int i=0;i<n;i++){
+           if(nums[i]==nums[i+k]) return nums[i];
         }
         return -1;
     }
