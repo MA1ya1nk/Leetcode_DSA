@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int mostBooked(int n, vector<vector<int>>& meetings) {
+        sort(meetings.begin(), meetings.end(),
+             [](const vector<int>& a, const vector<int>& b) {
+                 return a[0] < b[0];
+             });
+
+        int m = meetings.size();
+        vector<long long> lastavailable(n);
+        vector<int> roomsused(n);
+
+        for (auto& meet : meetings) {
+            int start = meet[0], end = meet[1];
+            bool found = false;
+            long long earlyEndRoomTime = LLONG_MAX;
+            int earlyEndRoom = 0;
+
+            // find the first available meeting room
+            for (int room = 0; room < n; room++) {
+                if (lastavailable[room] <= start) {
+                    found = true;
+                    lastavailable[room] = end;
+                    roomsused[room]++;
+                    break;
+                }
+
+                if (lastavailable[room] < earlyEndRoomTime) {
+                    earlyEndRoom = room;
+                    earlyEndRoomTime = lastavailable[room];
+                }
+            }
+
+            if (!found) {
+                lastavailable[earlyEndRoom] += (end - start);
+                roomsused[earlyEndRoom]++;
+            }
+        }
+
+        int resultRoom = -1;
+        int maxUse = 0;
+        for (int room = 0; room < n; room++) {
+            if (roomsused[room] > maxUse) {
+                maxUse = roomsused[room];
+                resultRoom = room;
+            }
+        }
+
+        return resultRoom;
+    }
+};
