@@ -5,7 +5,7 @@ public:
         vector<vector<int>> ans;
         int i=0,n=intervals.size();
         while(i<n){
-            int second=intervals[i][1],j=i;
+            int second=intervals[i][1],j=i+1;
             while(j<n && second>=intervals[j][0]){
                 second=max(second,intervals[j][1]);
                 j++;
