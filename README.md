@@ -33,26 +33,10 @@ This repository contains my **LeetCode solutions**, regularly synced to GitHub t
 
 ---
 
-## 🗂️ Folder Structure
-
-```
-📦 LeetCode
- ┣ 📂 Arrays
- ┣ 📂 Strings
- ┣ 📂 LinkedList
- ┣ 📂 Stack & Queue
- ┣ 📂 Recursion & Backtracking
- ┣ 📂 Greedy
- ┣ 📂 Dynamic Programming
- ┣ 📂 Trees & Graphs
- ┗ 📜 README.md
-```
-
----
 
 ## 🛠️ Tech Stack
 
-* **Languages**: C++ / JavaScript (as applicable)
+* **Languages**: C++
 * **Core Focus**:
 
   * Data Structures
@@ -83,16 +67,16 @@ This repository contains my **LeetCode solutions**, regularly synced to GitHub t
 ## 🤝 Connect With Me
 
 <p align="center">
-  <a href="https://github.com/your-github-username" target="_blank">
+  <a href="https://github.com/MA1ya1nk" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-000?style=for-the-badge&logo=github&logoColor=white" />
   </a>
-  <a href="https://www.linkedin.com/in/your-linkedin-username" target="_blank">
+  <a href="www.linkedin.com/in/mayank-kumar-dev" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" />
   </a>
-  <a href="mailto:your-email@example.com">
+  <a href="mailto:mk20040307@gmail.com">
     <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
   </a>
-  <a href="https://leetcode.com/your-leetcode-username" target="_blank">
+  <a href="https://leetcode.com/u/mayank73/" target="_blank">
     <img src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=black" />
   </a>
 </p>
