@@ -1,58 +1,45 @@
 class Solution {
 public:
-    int dijkstra(int node, unordered_map<int,list<pair<int,int>>>& adj,int n, int val){
-        set<pair<int,int>> st;
-        vector<int> dist(n);
-        for(int i=0;i<n;i++) dist[i]=INT_MAX;
-        dist[node]=0;
-        st.insert({0,node});
-        while(!st.empty()){
-            auto topo=*(st.begin());
-            int nodeDist=topo.first,nodeVal=topo.second;
-            st.erase(topo);
-            for(auto i:adj[nodeVal]){
-                if(nodeDist+i.second<dist[i.first]){
-                    auto search= st.find(make_pair(dist[i.first],i.first));
-                    if(search != st.end()){
-                        st.erase(search);
-                    }
-                    dist[i.first]=nodeDist+i.second;
-                    st.insert(make_pair(dist[i.first],i.first));
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<vector<int>> mat(n,vector<int>(n,0));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(i==j) mat[i][j]=0;
+                else mat[i][j]=INT_MAX;
+            }
+        }
+
+        for(int i=0;i<edges.size();i++){    
+                 int from=edges[i][0];
+                 int to=edges[i][1];
+                 int wtt=edges[i][2];
+                 mat[from][to]=wtt;
+                 mat[to][from]=wtt;
+        }
+
+        for(int via=0;via<n;via++){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    if(mat[i][via]<INT_MAX && mat[via][j]<INT_MAX)
+                      mat[i][j]=min(mat[i][j],mat[i][via]+mat[via][j]);
                 }
             }
         }
-
-        int ans=0;
+        
+        int ans=INT_MAX,temp=INT_MAX;
         for(int i=0;i<n;i++){
-           if(i!= node && dist[i]<=val) ans++;
-        }
-
-        return ans;
-    }
-    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        unordered_map<int,list<pair<int,int>>> adj;
-        for(int i=0;i<edges.size();i++){
-            int from=edges[i][0];
-            int to=edges[i][1];
-            int wtt=edges[i][2];
-            adj[from].push_back({to, wtt});
-            adj[to].push_back({from, wtt});
-        }
-
-        vector<int> ans(n,0);
-        for(int i=0;i<n;i++){
-            int temp=dijkstra(i,adj,n,distanceThreshold);
-            ans[i]=temp;
-        }
-
-        int finalAns=INT_MAX,temp=ans[0];
-        for(int i=0;i<n;i++){
-            if(ans[i]<=temp){
-                temp=ans[i];
-                finalAns=i;
+            int thres=0;
+            for(int j=0;j<n;j++){
+                if(i!=j && mat[i][j]<=distanceThreshold){
+                    thres++;
+                }
+            }
+            if(thres<=temp){
+                temp=thres;
+                ans=i;
             }
         }
 
-        return finalAns;
+        return ans;
     }
 };
