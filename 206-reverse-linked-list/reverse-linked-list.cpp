@@ -10,18 +10,17 @@
  */
 class Solution {
 public:
-void reverse(ListNode* &curr,ListNode* prev,ListNode* &ans){
-    if(!curr){
-        ans=prev;
-        return ;
+    ListNode* reverseList(ListNode* prev, ListNode* curr, ListNode* forw){
+        if(!forw){
+            curr->next=prev;
+            return curr;
+        }
+        curr->next=prev;
+        return reverseList(curr,forw,forw->next);
     }
-    reverse(curr->next,curr,ans);
-    curr->next=prev;
-}
     ListNode* reverseList(ListNode* head) {
         if(!head || !head->next) return head;
-        ListNode* ans=NULL;
-        reverse(head,NULL,ans);
-        return ans;
+        ListNode* curr=head, *forw=head->next, *prev=NULL;
+        return reverseList(prev,curr,forw);       
     }
 };
