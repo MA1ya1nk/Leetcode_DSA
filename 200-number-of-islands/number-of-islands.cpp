@@ -1,43 +1,37 @@
 class Solution {
 public:
-void bfs(vector<vector<char>>& grid, int r, int c, unordered_set<string>& visited, vector<pair<int, int>>& directions, int rows, int cols) {
-        queue<pair<int, int>> q;
-        visited.insert(to_string(r) + "," + to_string(c));
-        q.push({r, c});
-
-        while (!q.empty()) {
-            auto [row, col] = q.front();
+    void bfs(int i, int j, vector<vector<char>>& grid, vector<vector<int>>& vis){
+        int m=grid.size(), n = grid[0].size();
+        vector<int> row = {1,0,0,-1};
+        vector<int> col = {0,1,-1,0};
+        queue<pair<int,int>> q;
+        q.push({i,j});
+        while(!q.empty()){
+            auto top = q.front();
             q.pop();
-
-            for (auto [dr, dc] : directions) {
-                int nr = row + dr;
-                int nc = col + dc;
-                if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] == '1'
-                && visited.find(to_string(nr) + "," + to_string(nc)) == visited.end()) {
-                    q.push({nr, nc});
-                    visited.insert(to_string(nr) + "," + to_string(nc));
-                }
+            int currRow = top.first, currCol = top.second;
+            for(int i=0;i<4;i++){
+                int newRow = currRow+row[i], newCol = currCol+col[i];
+                if(newRow>=0 && newCol>=0 && newRow<m && newCol<n && grid[newRow][newCol]=='1'
+                    && !vis[newRow][newCol]){
+                        q.push({newRow, newCol});
+                        vis[newRow][newCol]=1;
+                    }
             }
         }
     }
     int numIslands(vector<vector<char>>& grid) {
-        int islands = 0;
-        int rows = grid.size();
-        int cols = grid[0].size();
-        unordered_set<string> visited;
-
-        vector<pair<int, int>> directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (grid[r][c] == '1' && visited.find(to_string(r) + "," + to_string(c)) 
-                          == visited.end()) {
+        int m = grid.size(), n = grid[0].size(), islands = 0;
+        vector<vector<int>> vis(m,vector<int>(n,0));
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j] == '1' && !vis[i][j]){
                     islands++;
-                    bfs(grid, r, c, visited, directions, rows, cols);
+                    vis[i][j]=1;
+                    bfs(i,j,grid,vis);
                 }
             }
         }
-
-        return islands;        
+        return islands;
     }
 };
