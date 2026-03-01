@@ -11,22 +11,19 @@
  */
 class Solution {
 public:
+    int ans = INT_MAX;
+    void helper(TreeNode* root, int val){
+        if(!root) return ;
+        if(!root->left && !root->right){
+            ans = min(ans,val);
+            return ;
+        }
+        helper(root->left, val+1);
+        helper(root->right, val+1);
+    }
     int minDepth(TreeNode* root) {
         if(!root) return 0;
-        int ans=0;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty()){
-            int size = q.size();
-            ans++;
-            while(size--){
-                auto front = q.front();
-                q.pop();
-                if(!front->left && !front->right) return ans;
-                if(front->left) q.push(front->left);
-                if(front->right) q.push(front->right);
-            }
-        }
+        helper(root,1);
         return ans;
     }
 };
