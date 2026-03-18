@@ -8,31 +8,39 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-struct cmp
-{
-    bool operator()(ListNode* a, ListNode* b) const
-    {
-        return a->val > b->val;
-    }
-};
-
 class Solution {
 public:
+    ListNode* mergeTwoSortedList(ListNode* l1, ListNode* l2){
+        if(!l1) return l2;
+        if(!l2) return l1;
+
+        if(l1->val > l2->val){
+           l2->next = mergeTwoSortedList(l1,l2->next);
+           return l2;
+        } 
+        else{
+            l1->next = mergeTwoSortedList(l1->next,l2);
+            return l1;
+        }
+    }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<ListNode*, vector<ListNode*>, cmp> pq;
-        for (auto node : lists) if (node) pq.push(node);
+        int size = lists.size();
+        if(size == 0) return NULL;
+        if(size == 1) return lists[0];
 
-        ListNode dummy(0);
-        ListNode *tail = &dummy;
-
-        while (!pq.empty())
-        {
-            ListNode* node = pq.top(); pq.pop();
-            tail->next = node;
-            tail = tail->next;
-            if (node->next) pq.push(node->next);
+        queue<ListNode*> q;
+        for(int i=0;i<size;i++){
+            q.push(lists[i]);
         }
 
-        return dummy.next;
+        while(q.size()!=1){
+            ListNode* fir = q.front();
+            q.pop();
+            ListNode* sec = q.front();
+            q.pop();
+            ListNode* temp = mergeTwoSortedList(fir, sec);
+            q.push(temp);
+        }
+        return q.front();
     }
 };
